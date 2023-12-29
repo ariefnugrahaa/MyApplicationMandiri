@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnRegister.setOnClickListener {
-                handleTo(RegisterActivity::class.java)
+                handleTo(HomeActivity::class.java)
             }
         }
     }
