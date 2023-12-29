@@ -4,41 +4,35 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
-import kotlinx.coroutines.delay
+import com.example.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         handleLogin()
     }
 
     private fun handleLogin() {
-        val buttonLogin = findViewById<Button>(R.id.btnLogin)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
-        val tvErrorPassword = findViewById<TextView>(R.id.tvErrorPassword)
-        val btnRegister = findViewById<TextView>(R.id.btnRegister)
         val password = "admin1234"
-
-        buttonLogin.setOnClickListener {
-            if (etPassword.text.toString() != password) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-                handleVisibility(tvErrorPassword, true)
-            } else {
-                handleVisibility(tvErrorPassword, false)
-                Toast.makeText(this, "Password ", Toast.LENGTH_SHORT).show()
-                handleTo(HomeActivity::class.java)
+        binding.apply {
+            btnLogin.setOnClickListener {
+                if (etPassword.text.toString() != password) {
+                    handleVisibility(tvErrorPassword, true)
+                } else {
+                    handleVisibility(tvErrorPassword, false)
+                    handleTo(ProfileActivity::class.java)
+                }
             }
-        }
 
-        btnRegister.setOnClickListener {
-            handleTo(RegisterActivity::class.java)
+            btnRegister.setOnClickListener {
+                handleTo(RegisterActivity::class.java)
+            }
         }
     }
 
