@@ -6,16 +6,28 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.helper.SharedPref
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var sharedPref: SharedPref
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPref = SharedPref(this)
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         handleLogin()
+
+        if (checkAvailableToken()) {
+            handleTo(HomeActivity::class.java)
+        }
     }
 
     private fun handleLogin() {
@@ -26,7 +38,11 @@ class MainActivity : AppCompatActivity() {
                     handleVisibility(tvErrorPassword, true)
                 } else {
                     handleVisibility(tvErrorPassword, false)
-                    handleTo(ProfileActivity::class.java)
+                    handleTo(HomeActivity::class.java)
+
+                    val dummyToken = UUID.randomUUID().toString()
+                    sharedPref.saveToken(dummyToken)
+
                 }
             }
 
@@ -34,6 +50,11 @@ class MainActivity : AppCompatActivity() {
                 handleTo(HomeActivity::class.java)
             }
         }
+    }
+
+    private fun checkAvailableToken(): Boolean {
+        val token = sharedPref.getToken()
+        return token.isNotEmpty()
     }
 
     private fun handleTo(clazz: Class<*>) {

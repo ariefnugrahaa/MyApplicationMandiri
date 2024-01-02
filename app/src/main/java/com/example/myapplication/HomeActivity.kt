@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.example.myapplication.adapter.EwalletAdapter
 import com.example.myapplication.adapter.MenuHomeAdapter
 import com.example.myapplication.adapter.SavingDepositAdapter
 import com.example.myapplication.databinding.ActivityHomeBinding
+import com.example.myapplication.helper.SharedPref
 import com.example.myapplication.model.EwalletModel
 import com.example.myapplication.model.MenuModel
 import com.example.myapplication.model.SavingDepositModel
@@ -25,15 +27,27 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var savingDepositAdapter: SavingDepositAdapter
     private lateinit var menuAdapter: MenuHomeAdapter
+    private lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sharedPref = SharedPref(this)
+
         setupViewMenu()
         setUpViewEWallet()
         setUpViewSavingDeposit()
+        setupLogout()
+    }
+
+    private fun setupLogout() {
+        binding.btnLogout.setOnClickListener {
+            sharedPref.clearDataPref()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun setUpViewEWallet() {
