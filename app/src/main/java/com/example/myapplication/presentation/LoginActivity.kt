@@ -1,17 +1,17 @@
-package com.example.myapplication
+package com.example.myapplication.presentation
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.helper.SharedPref
 import java.util.UUID
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityLoginBinding
 
     private lateinit var sharedPref: SharedPref
 
@@ -21,12 +21,12 @@ class MainActivity : AppCompatActivity() {
         sharedPref = SharedPref(this)
 
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         handleLogin()
 
         if (checkAvailableToken()) {
-            handleTo(HomeActivity::class.java)
+            handleTo(HomeMainActivity::class.java)
         }
     }
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     handleVisibility(tvErrorPassword, true)
                 } else {
                     handleVisibility(tvErrorPassword, false)
-                    handleTo(HomeActivity::class.java)
+                    handleTo(HomeMainActivity::class.java)
 
                     val dummyToken = UUID.randomUUID().toString()
                     sharedPref.saveToken(dummyToken)
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnRegister.setOnClickListener {
-                handleTo(HomeActivity::class.java)
+                handleTo(HomeMainActivity::class.java)
             }
         }
     }

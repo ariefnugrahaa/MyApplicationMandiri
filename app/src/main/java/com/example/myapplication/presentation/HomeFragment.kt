@@ -1,25 +1,27 @@
-package com.example.myapplication
+package com.example.myapplication.presentation
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.adapter.EwalletAdapter
 import com.example.myapplication.adapter.MenuHomeAdapter
 import com.example.myapplication.adapter.SavingDepositAdapter
-import com.example.myapplication.databinding.ActivityHomeBinding
-import com.example.myapplication.helper.SharedPref
+import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.model.EwalletModel
 import com.example.myapplication.model.MenuModel
 import com.example.myapplication.model.SavingDepositModel
 
-class HomeActivity : AppCompatActivity() {
+class HomeFragment : Fragment() {
 
-    private lateinit var binding: ActivityHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private var ewalletAdapter = EwalletAdapter()
 
@@ -27,27 +29,28 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var savingDepositAdapter: SavingDepositAdapter
     private lateinit var menuAdapter: MenuHomeAdapter
-    private lateinit var sharedPref: SharedPref
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        sharedPref = SharedPref(this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupViewMenu()
         setUpViewEWallet()
         setUpViewSavingDeposit()
-        setupLogout()
     }
 
-    private fun setupLogout() {
-        binding.btnLogout.setOnClickListener {
-            sharedPref.clearDataPref()
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // To avoid memory leaks, nullify the binding object in onDestroyView
+        _binding = null
     }
 
     private fun setUpViewEWallet() {
@@ -57,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
         ewalletAdapter.setDataEwallet(dummyEwalletList ?: mutableListOf())
         ewalletAdapter.setOnClickEwallet { Ewallet ->
 
-            Toast.makeText(this, "Berhasil menghubungkan ${Ewallet.name}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Berhasil menghubungkan ${Ewallet.name}", Toast.LENGTH_SHORT).show()
 
             dummyEwalletList?.forEach {
                 if (it.name == Ewallet.name) it.isConnected = true
@@ -200,14 +203,10 @@ class HomeActivity : AppCompatActivity() {
         menuAdapter = MenuHomeAdapter(populateDataMenuHome())
         binding.componentMenuHome.gridHome.adapter = menuAdapter
         binding.componentMenuHome.gridHome.layoutManager = GridLayoutManager(
-            this,
+            context,
             2,
             RecyclerView.HORIZONTAL,
             false
         )
     }
 }
-
-
-
-

@@ -1,8 +1,8 @@
-package com.example.myapplication
+package com.example.myapplication.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.RegisterActivity.Companion.KEY_NAME_VALUE
+import com.example.myapplication.presentation.RegisterActivity.Companion.KEY_NAME_VALUE
 import com.example.myapplication.databinding.ActivityProfileBinding
 
 class ProfileActivity: AppCompatActivity() {
