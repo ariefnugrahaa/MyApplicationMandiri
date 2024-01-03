@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.databinding.HomeMainActivityBinding
 import com.example.myapplication.helper.SharedPref
+import com.example.myapplication.presentation.home.HomeFragment
+import com.example.myapplication.presentation.message.MessageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeMainActivity : AppCompatActivity() {
