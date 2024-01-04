@@ -70,6 +70,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // move to viewModel
     private fun createDummyEwalletList(): MutableList<EwalletModel> {
         return mutableListOf(
             EwalletModel(name = "Gojek", image = R.drawable.ic_arrow_bacl, balance = 100000.0, isConnected = false),
@@ -99,6 +100,8 @@ class HomeFragment : Fragment() {
             binding.componentHomeSavingDeposit.llShowLess.visibility = View.GONE
         }
     }
+
+    // move to viewModel
 
     private fun populateSavingDepositData() : MutableList<SavingDepositModel> {
         return mutableListOf(
@@ -130,6 +133,7 @@ class HomeFragment : Fragment() {
         )
     }
 
+    // move to viewModel
     private fun populateDataMenuHome() : List<MenuModel> {
         return listOf(
             MenuModel(

@@ -27,6 +27,8 @@
 
         <activity android:name=".presentation.HomeMainActivity" />
 
+        <activity android:name=".presentation.message.view.DetailTransactionActivity"/>
+
 
 
     </application>
