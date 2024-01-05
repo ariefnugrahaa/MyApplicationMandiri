@@ -32,14 +32,12 @@ class HistoryTransactionFragment : Fragment() {
         binding.rvTransaction.adapter = HistoryTransactionAdapter(
             data = populateDataHistoryTransaction(),
             onClickHistoryTransaction = {
-                navigateToDetailHistory()
+                DetailTransactionActivity.navigateToDetailTransaction(
+                    activity = requireActivity(),
+                    data = it
+                )
             }
         )
-    }
-
-    private fun navigateToDetailHistory() {
-        val intent = Intent(context, DetailTransactionActivity::class.java)
-        startActivity(intent)
     }
 
     private fun populateDataHistoryTransaction(): List<HistoryTransactionModel> {
