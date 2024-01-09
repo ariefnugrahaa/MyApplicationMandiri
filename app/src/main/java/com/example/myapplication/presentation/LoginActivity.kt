@@ -6,19 +6,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.myapplication.databinding.ActivityLoginBinding
-import com.example.myapplication.helper.SharedPref
+import com.example.myapplication.helper.SharedPrefHelper
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
-    private lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var sharedPrefHelper: SharedPrefHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sharedPref = SharedPref(this)
 
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -41,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                     handleTo(HomeMainActivity::class.java)
 
                     val dummyToken = UUID.randomUUID().toString()
-                    sharedPref.saveToken(dummyToken)
+                    sharedPrefHelper.saveToken(dummyToken)
 
                 }
             }
@@ -53,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkAvailableToken(): Boolean {
-        val token = sharedPref.getToken()
+        val token = sharedPrefHelper.getToken()
         return token.isNotEmpty()
     }
 

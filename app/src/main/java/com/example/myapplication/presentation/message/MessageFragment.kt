@@ -1,36 +1,23 @@
 package com.example.myapplication.presentation.message
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.myapplication.adapter.MessageTabAdapter
-import com.example.myapplication.databinding.FragmentHomeBinding
+import com.example.myapplication.base.BaseFragment
 import com.example.myapplication.databinding.FragmentMessageBinding
 import com.example.myapplication.presentation.message.view.HistoryTransactionFragment
 import com.example.myapplication.presentation.message.view.NotificationFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MessageFragment : Fragment() {
-
-    private var _binding: FragmentMessageBinding? = null
-    private val binding get() = _binding!!
-    private var _testBool = false
+class MessageFragment : BaseFragment<FragmentMessageBinding>() {
 
     private var adapterMessage : MessageTabAdapter? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMessageBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMessageBinding {
+        return FragmentMessageBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupView() {
         setupTabView()
     }
 
@@ -54,9 +41,7 @@ class MessageFragment : Fragment() {
         }.attach()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
+
 
 }

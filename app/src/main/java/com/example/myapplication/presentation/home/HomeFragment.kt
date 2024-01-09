@@ -13,44 +13,27 @@ import com.example.myapplication.R
 import com.example.myapplication.adapter.EwalletAdapter
 import com.example.myapplication.adapter.MenuHomeAdapter
 import com.example.myapplication.adapter.SavingDepositAdapter
+import com.example.myapplication.base.BaseFragment
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.model.EwalletModel
 import com.example.myapplication.model.MenuModel
 import com.example.myapplication.model.SavingDepositModel
 
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private var ewalletAdapter = EwalletAdapter()
-
     private var dummyEwalletList: MutableList<EwalletModel>? = mutableListOf()
-
     private lateinit var savingDepositAdapter: SavingDepositAdapter
     private lateinit var menuAdapter: MenuHomeAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setupView() {
         setupViewMenu()
         setUpViewEWallet()
         setUpViewSavingDeposit()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // To avoid memory leaks, nullify the binding object in onDestroyView
-        _binding = null
     }
 
     private fun setUpViewEWallet() {

@@ -9,7 +9,7 @@ import com.example.myapplication.model.HistoryTransactionModel
 import com.example.myapplication.model.StatusTransaction
 
 class HistoryTransactionAdapter(
-    private val data: List<HistoryTransactionModel>,
+    private var data: List<HistoryTransactionModel>,
     private val onClickHistoryTransaction: (HistoryTransactionModel) -> Unit
 ) : RecyclerView.Adapter<HistoryTransactionAdapter.TransactionHistoryViewHolder>() {
 
@@ -21,6 +21,11 @@ class HistoryTransactionAdapter(
                 false
             )
         )
+    }
+
+    fun filterTransactionData(updatedData: List<HistoryTransactionModel>) {
+        this.data = updatedData
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: TransactionHistoryViewHolder, position: Int) {
