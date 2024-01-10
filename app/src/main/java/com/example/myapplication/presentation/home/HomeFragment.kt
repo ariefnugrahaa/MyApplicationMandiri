@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -18,8 +19,14 @@ import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.model.EwalletModel
 import com.example.myapplication.model.MenuModel
 import com.example.myapplication.model.SavingDepositModel
+import com.example.myapplication.presentation.home.viewmodel.HomeViewModel
+import com.example.myapplication.presentation.viewmodel.NotificationViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private var ewalletAdapter = EwalletAdapter()
     private var dummyEwalletList: MutableList<EwalletModel>? = mutableListOf()
@@ -31,9 +38,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun setupView() {
-        setupViewMenu()
         setUpViewEWallet()
         setUpViewSavingDeposit()
+        viewModel.getMenuHome()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.homeMenu.observe(viewLifecycleOwner) {
+            setupViewMenu(it)
+        }
+    }
+
+    private fun setupViewMenu(data: List<MenuModel>) {
+        menuAdapter = MenuHomeAdapter(data)
+        binding.componentMenuHome.gridHome.adapter = menuAdapter
+        binding.componentMenuHome.gridHome.layoutManager = GridLayoutManager(
+            context,
+            2,
+            RecyclerView.HORIZONTAL,
+            false
+        )
     }
 
     private fun setUpViewEWallet() {
@@ -116,84 +141,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         )
     }
 
-    // move to viewModel
-    private fun populateDataMenuHome() : List<MenuModel> {
-        return listOf(
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Transfer"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Cek Saldo"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "E-Wallet"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Donasi"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Zakat"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Cashless"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Tabungan Deposito"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Setting"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Zakat"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Cashless"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Tabungan Deposito"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Setting"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Zakat"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Cashless"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Tabungan Deposito"
-            ),
-            MenuModel(
-                image = R.drawable.ic_upload,
-                menuTitle = "Setting"
-            ),
-        )
-    }
-
-    private fun setupViewMenu() {
-        menuAdapter = MenuHomeAdapter(populateDataMenuHome())
-        binding.componentMenuHome.gridHome.adapter = menuAdapter
-        binding.componentMenuHome.gridHome.layoutManager = GridLayoutManager(
-            context,
-            2,
-            RecyclerView.HORIZONTAL,
-            false
-        )
-    }
 }

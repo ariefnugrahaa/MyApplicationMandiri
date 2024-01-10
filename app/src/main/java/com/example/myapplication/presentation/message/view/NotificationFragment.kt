@@ -28,7 +28,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
     }
 
     override fun setupView() {
-        viewModel.setNotificationData(populateDateNotification())
+        viewModel.setNotificationData()
         binding.rvMessage.setOnClickListener { viewModel.updateCustomData() }
         observeViewModel()
     }
@@ -41,51 +41,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
 
     private fun setNotificationData(data: List<NotificationModel>) {
         binding.rvMessage.adapter = NotificationAdapter(data)
-    }
-
-    private fun populateDateNotification(): List<NotificationModel> {
-        return listOf(
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-            NotificationModel(
-                date = "23 september 2023",
-                title = "Selamat Anda mendaatkan Mobil",
-                subtitle = "jsdkadshdhadlaskhdksladhlsahdlahdlaskdasd"
-            ),
-        )
     }
 
 
